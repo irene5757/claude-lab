@@ -3,55 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Irene 的自我介紹</title>
+  <title>Irene — 平面設計師作品集</title>
+  <meta name="description" content="Irene，專注品牌識別、編排與包裝設計的自由接案平面設計師。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,500&family=Noto+Sans+TC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,300&family=Josefin+Sans:wght@200;300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Noto+Sans+TC:wght@300;400;500&family=Cormorant+Garamond:ital,wght@1,300;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
       --night-0: #03061a;
       --night-1: #0a1238;
       --night-2: #142060;
       --star: #f4f6ff;
-      --star-dim: rgba(244, 246, 255, 0.62);
+      --star-dim: rgba(244, 246, 255, 0.64);
+      --star-faint: rgba(244, 246, 255, 0.42);
       --glow: #9fb4ff;
-      --line: rgba(190, 205, 255, 0.18);
+      --glow-strong: #c4d0ff;
+      --line: rgba(190, 205, 255, 0.16);
+      --line-strong: rgba(200, 215, 255, 0.42);
+      --surface: rgba(20, 30, 85, 0.42);
+      --font: "Inter", "Noto Sans TC", system-ui, -apple-system, sans-serif;
+      --serif: "Cormorant Garamond", Georgia, serif;
+      --max: 1160px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    html, body { overflow-x: hidden; }
+    html { scroll-behavior: smooth; }
+    /* 防止任何元素造成水平捲動；支援 clip 的瀏覽器改用 clip，避免 hidden 讓 sticky 導覽列失效 */
+    html, body { max-width: 100%; overflow-x: hidden; overflow-x: clip; }
+    img, svg, video { max-width: 100%; }
 
     body {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-      font-family: "Noto Sans TC", system-ui, sans-serif;
+      font-family: var(--font);
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-wrap: break-word;
       color: var(--star);
+      -webkit-font-smoothing: antialiased;
       background:
-        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(80, 100, 220, 0.28), transparent 60%),
-        radial-gradient(ellipse 70% 50% at 85% 90%, rgba(120, 80, 200, 0.22), transparent 60%),
-        radial-gradient(ellipse at 50% 120%, var(--night-2) 0%, var(--night-1) 45%, var(--night-0) 100%);
+        radial-gradient(ellipse 70% 50% at 15% 0%, rgba(80, 100, 220, 0.30), transparent 60%),
+        radial-gradient(ellipse 60% 45% at 90% 35%, rgba(120, 80, 200, 0.20), transparent 60%),
+        radial-gradient(ellipse 80% 50% at 50% 100%, rgba(40, 60, 170, 0.28), transparent 65%),
+        linear-gradient(180deg, var(--night-0) 0%, var(--night-1) 55%, var(--night-0) 100%);
       background-color: var(--night-0);
-      position: relative;
+      background-attachment: fixed;
     }
+
+    a { color: inherit; text-decoration: none; }
+
+    ::selection { background: rgba(159, 180, 255, 0.35); }
 
     /* ===== 星空層 ===== */
-    .sky {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .stars {
-      position: absolute;
-      inset: -50%;
-      background-repeat: repeat;
-    }
-
+    .sky { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .stars { position: absolute; inset: -50%; background-repeat: repeat; }
     .stars.s1 {
       background-image:
         radial-gradient(1px 1px at 20px 30px, #fff, transparent),
@@ -61,10 +66,9 @@
         radial-gradient(1px 1px at 50px 220px, rgba(255,255,255,.7), transparent),
         radial-gradient(1px 1px at 280px 20px, #fff, transparent);
       background-size: 300px 260px;
-      opacity: .7;
-      animation: twinkle 5s ease-in-out infinite alternate, float 240s linear infinite;
+      opacity: .55;
+      animation: twinkle 5s ease-in-out infinite alternate, drift 260s linear infinite;
     }
-
     .stars.s2 {
       background-image:
         radial-gradient(1.5px 1.5px at 60px 80px, #fff, transparent),
@@ -72,9 +76,9 @@
         radial-gradient(1.5px 1.5px at 340px 260px, #fff, transparent),
         radial-gradient(1.5px 1.5px at 130px 330px, #cfd9ff, transparent);
       background-size: 420px 400px;
-      animation: twinkle 7s ease-in-out infinite alternate-reverse, float 180s linear infinite;
+      opacity: .8;
+      animation: twinkle 7s ease-in-out infinite alternate-reverse, drift 200s linear infinite;
     }
-
     .stars.s3 {
       background-image:
         radial-gradient(2px 2px at 120px 150px, #fff, transparent),
@@ -82,207 +86,299 @@
         radial-gradient(2px 2px at 330px 90px, #fff, transparent);
       background-size: 600px 520px;
       filter: drop-shadow(0 0 3px rgba(200, 215, 255, .9));
-      animation: twinkle 4s ease-in-out infinite alternate, float 120s linear infinite;
+      animation: twinkle 4s ease-in-out infinite alternate, drift 140s linear infinite;
     }
-
-    @keyframes twinkle {
-      from { opacity: .35; }
-      to   { opacity: 1; }
-    }
-
-    @keyframes float {
-      from { transform: translate3d(0, 0, 0); }
-      to   { transform: translate3d(-300px, -260px, 0); }
-    }
-
     .shooting {
-      position: absolute;
-      top: 12%;
-      left: 70%;
-      width: 140px;
-      height: 1.5px;
+      position: absolute; top: 14%; left: 72%;
+      width: 140px; height: 1.5px;
       background: linear-gradient(90deg, rgba(255,255,255,.95), transparent);
       border-radius: 999px;
       transform: rotate(-35deg);
       opacity: 0;
-      animation: shoot 9s ease-in 2s infinite;
+      animation: shoot 11s ease-in 3s infinite;
     }
 
-    .shooting.late {
-      top: 30%;
-      left: 30%;
-      animation-delay: 6.5s;
-      animation-duration: 13s;
-    }
-
+    @keyframes twinkle { from { opacity: .3; } to { opacity: 1; } }
+    @keyframes drift { from { transform: translate3d(0,0,0); } to { transform: translate3d(-300px,-260px,0); } }
     @keyframes shoot {
       0%   { opacity: 0; transform: rotate(-35deg) translateX(0); }
       2%   { opacity: 1; }
-      9%   { opacity: 0; transform: rotate(-35deg) translateX(-420px); }
+      8%   { opacity: 0; transform: rotate(-35deg) translateX(-420px); }
       100% { opacity: 0; transform: rotate(-35deg) translateX(-420px); }
     }
 
-    /* ===== 卡片 ===== */
-    .card {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 520px;
-      padding: 52px 40px 48px;
-      text-align: center;
-      background: linear-gradient(160deg, rgba(30, 42, 110, 0.55), rgba(8, 12, 40, 0.7));
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      box-shadow:
-        0 30px 80px rgba(0, 0, 10, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08),
-        0 0 60px rgba(110, 140, 255, 0.08);
-      animation: rise 1s ease-out both;
-    }
-
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(24px); }
+    /* ===== 淡入動畫 ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+    .fade { animation: fadeUp .9s cubic-bezier(.2,.7,.2,1) both; }
+    .d1 { animation-delay: .1s; }
+    .d2 { animation-delay: .25s; }
+    .d3 { animation-delay: .4s; }
+    .d4 { animation-delay: .55s; }
+    .d5 { animation-delay: .7s; }
 
-    .avatar {
-      position: relative;
-      width: 112px;
-      height: 112px;
-      margin: 0 auto 28px;
+    /* 捲動進場：JS 啟用時才隱藏，未啟用時保持可見 */
+    .js .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+    .js .reveal.in { opacity: 1; transform: none; }
+
+    /* ===== 版面 ===== */
+    .wrap { position: relative; z-index: 1; width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+
+    /* ===== 導覽列 ===== */
+    .nav {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(3, 6, 26, 0.78), rgba(3, 6, 26, 0.35));
+      border-bottom: 1px solid var(--line);
+    }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 300; font-size: 18px; letter-spacing: .18em; text-transform: uppercase; }
+    .brand svg { width: 30px; height: 30px; filter: drop-shadow(0 0 6px rgba(200, 215, 255, .5)); }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; font-size: 14px; color: var(--star-dim); }
+    .nav-links a { transition: color .2s ease; }
+    .nav-links a:hover { color: var(--star); }
+    .status {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 14px; border-radius: 999px;
+      border: 1px solid var(--line); background: rgba(255,255,255,.04);
+      font-size: 12px; letter-spacing: .04em; color: var(--star-dim);
+    }
+    .status::before {
+      content: ""; width: 7px; height: 7px; border-radius: 50%;
+      background: #8ef0c0; box-shadow: 0 0 10px #8ef0c0;
+      animation: twinkle 1.6s ease-in-out infinite alternate;
     }
 
-    /* 細線彎月 */
-    .avatar svg {
-      display: block;
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-      filter: drop-shadow(0 0 6px rgba(200, 215, 255, 0.55)) drop-shadow(0 0 22px rgba(160, 185, 255, 0.25));
+    /* ===== 英雄區塊 ===== */
+    .hero { padding: 140px 0 150px; text-align: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 14px;
+      font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase;
+      color: var(--glow-strong); margin-bottom: 30px;
     }
+    .eyebrow::before, .eyebrow::after { content: "✦"; font-size: 9px; color: var(--glow); letter-spacing: 0; }
 
-    .avatar .tw { animation: twinkle 3s ease-in-out infinite alternate; }
-    .avatar .tw.d1 { animation-delay: -1s; }
-    .avatar .tw.d2 { animation-delay: -2s; }
-    .avatar .tw.d3 { animation-delay: -0.5s; }
-
-    .hello {
-      font-family: "Josefin Sans", system-ui, sans-serif;
-      font-weight: 300;
-      font-size: 14px;
-      letter-spacing: 0.35em;
-      padding-left: 0.35em; /* 抵銷字距，保持置中 */
-      text-transform: uppercase;
-      color: var(--star-dim);
-      margin-bottom: 8px;
-    }
-
-    h1 {
-      font-family: "Josefin Sans", system-ui, sans-serif;
-      font-size: 60px;
+    .hero h1 {
+      font-size: clamp(40px, 6.6vw, 84px);
       font-weight: 200;
-      line-height: 1.1;
-      letter-spacing: 0.12em;
-      padding-left: 0.12em; /* 抵銷字距造成的視覺偏移，保持置中 */
-      background: linear-gradient(180deg, #ffffff 30%, #b9c7ff 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      filter: drop-shadow(0 0 18px rgba(160, 185, 255, 0.45));
-      margin-bottom: 32px;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      max-width: 14em;
+      margin: 0 auto 28px;
+      background: linear-gradient(180deg, #ffffff 35%, #b9c7ff 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 0 24px rgba(160, 185, 255, .35));
     }
-
-    .section-title {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.3em;
-      color: var(--star-dim);
-      margin-bottom: 16px;
-    }
-
-    .section-title::before,
-    .section-title::after {
-      content: "✦";
-      font-size: 9px;
-      color: var(--glow);
+    .hero h1 em {
+      font-family: var(--serif); font-style: italic; font-weight: 300;
       letter-spacing: 0;
     }
-
-    .interests {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
+    .hero .lead {
+      max-width: 620px; margin: 0 auto 48px;
+      font-size: clamp(16px, 1.6vw, 18px); font-weight: 300;
+      color: var(--star-dim);
     }
 
-    .tag {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 22px;
+    .cta { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-width: 168px; min-height: 44px; padding: 15px 30px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--line);
+      font-family: var(--font); font-size: 15px; font-weight: 500; letter-spacing: .02em;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+    }
+    .btn svg { width: 16px; height: 16px; transition: transform .25s ease; }
+    .btn:hover svg { transform: translateX(3px); }
+    .btn-primary {
+      color: #0a1238;
+      background: linear-gradient(135deg, #ffffff, #c9d4ff);
+      box-shadow: 0 10px 34px rgba(140, 165, 255, .35), inset 0 -1px 0 rgba(0,0,0,.08);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 44px rgba(140, 165, 255, .55); }
+    .btn-ghost {
       color: var(--star);
-      font-size: 16px;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,.04);
     }
+    .btn-ghost:hover { transform: translateY(-2px); background: rgba(255,255,255,.09); border-color: rgba(220,228,255,.7); }
+    .btn:focus-visible, .nav-links a:focus-visible, .card:focus-visible { outline: 2px solid var(--glow); outline-offset: 3px; }
 
-    .tag:hover {
-      transform: translateY(-3px);
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(200, 215, 255, 0.5);
-      box-shadow: 0 0 24px rgba(140, 165, 255, 0.35);
-    }
-
-    .tag span { font-size: 20px; }
-
-    blockquote {
-      position: relative;
-      padding-top: 30px;
+    .services {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 10px 32px;
+      margin-top: 72px; padding-top: 28px;
       border-top: 1px solid var(--line);
-      font-family: "Cormorant Garamond", "Playfair Display", serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: 26px;
-      letter-spacing: 0.03em;
-      line-height: 1.5;
-      color: rgba(234, 239, 255, 0.9);
+      max-width: 640px; margin-left: auto; margin-right: auto;
+      font-size: 13px; letter-spacing: .14em; color: var(--star-faint); text-transform: uppercase;
     }
 
-    blockquote::before {
-      content: "✦";
-      position: absolute;
-      top: -11px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 0 14px;
-      font-family: system-ui, sans-serif;
-      font-style: normal;
-      font-size: 16px;
-      line-height: 20px;
-      color: #fff;
-      text-shadow: 0 0 10px rgba(200, 215, 255, 0.9);
-      background: #0c1236;
-      border-radius: 999px;
+    /* ===== 精選作品 ===== */
+    .section { padding: 40px 0 140px; }
+    .section-head {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+      margin-bottom: 52px;
+    }
+    .kicker { font-size: 12px; font-weight: 500; letter-spacing: .3em; text-transform: uppercase; color: var(--glow); margin-bottom: 12px; }
+    .section-head h2 { font-size: clamp(30px, 3.6vw, 44px); font-weight: 300; letter-spacing: -0.015em; line-height: 1.2; }
+    .section-head p { max-width: 380px; font-size: 15px; font-weight: 300; color: var(--star-dim); }
+
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+    .grid > * { min-width: 0; }
+
+    .card {
+      position: relative;
+      display: flex; flex-direction: column;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(160deg, rgba(30, 42, 110, .5), rgba(8, 12, 40, .72));
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 24px 60px rgba(0, 0, 10, .45), inset 0 1px 0 rgba(255,255,255,.06);
+      overflow: hidden;
+      transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: var(--line-strong);
+      box-shadow: 0 30px 70px rgba(0, 0, 10, .55), 0 0 50px rgba(120, 150, 255, .16), inset 0 1px 0 rgba(255,255,255,.1);
     }
 
-    @media (max-width: 480px) {
-      .card { padding: 40px 24px 36px; }
-      h1 { font-size: 50px; }
-      blockquote { font-size: 22px; }
+    .cover {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      display: grid; place-items: center;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+    .cover::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+      opacity: .6;
+    }
+    .cover.c1 { background: radial-gradient(circle at 30% 30%, rgba(120, 150, 255, .35), transparent 60%), linear-gradient(140deg, #18245e, #0a1033); }
+    .cover.c2 { background: radial-gradient(circle at 70% 25%, rgba(170, 120, 255, .32), transparent 60%), linear-gradient(140deg, #221a5c, #0b0d33); }
+    .cover.c3 { background: radial-gradient(circle at 50% 80%, rgba(110, 200, 255, .28), transparent 60%), linear-gradient(140deg, #102a5a, #08112e); }
+
+    .icon {
+      position: relative;
+      width: 96px; height: 96px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 0 40px rgba(150, 175, 255, .25), inset 0 0 20px rgba(200, 215, 255, .08);
+      transition: transform .5s cubic-bezier(.2,.7,.2,1);
+    }
+    .card:hover .icon { transform: scale(1.08) rotate(-4deg); }
+    .icon svg { width: 46px; height: 46px; stroke: #eef2ff; fill: none; stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(200, 215, 255, .55)); }
+
+    .cover .num {
+      position: absolute; top: 18px; left: 20px;
+      font-size: 12px; font-weight: 500; letter-spacing: .2em; color: var(--star-faint);
+    }
+
+    .body { padding: 28px 28px 30px; display: flex; flex-direction: column; flex: 1; }
+    .meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .pill {
+      padding: 4px 12px; border-radius: 999px;
+      border: 1px solid var(--line); background: rgba(255,255,255,.04);
+      font-size: 11.5px; font-weight: 500; letter-spacing: .06em; color: var(--star-dim);
+    }
+    .card h3 { font-size: 21px; font-weight: 500; letter-spacing: -0.005em; line-height: 1.35; margin-bottom: 4px; }
+    .card .en { font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--glow-strong); margin-bottom: 16px; }
+    .card p.concept { font-size: 14.5px; font-weight: 300; color: var(--star-dim); line-height: 1.85; flex: 1; }
+    .more {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 24px; padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-size: 13px; font-weight: 500; letter-spacing: .04em; color: var(--star);
+    }
+    .more svg { width: 14px; height: 14px; transition: transform .25s ease; }
+    .card:hover .more svg { transform: translateX(4px); }
+
+    /* ===== 聯絡 ===== */
+    .contact {
+      position: relative;
+      margin-bottom: 120px;
+      padding: 72px 48px;
+      text-align: center;
+      border-radius: 32px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 0%, rgba(120, 150, 255, .22), transparent 70%),
+        linear-gradient(160deg, rgba(30, 42, 110, .5), rgba(8, 12, 40, .7));
+      overflow: hidden;
+    }
+    .contact h2 { font-size: clamp(28px, 3.8vw, 46px); font-weight: 200; letter-spacing: -0.015em; line-height: 1.25; margin-bottom: 18px; }
+    .contact h2 em { font-family: var(--serif); font-style: italic; font-weight: 300; }
+    .contact p { max-width: 520px; margin: 0 auto 36px; font-weight: 300; color: var(--star-dim); }
+    .contact .mail { display: block; margin-top: 22px; font-size: 14px; letter-spacing: .04em; color: var(--star-faint); }
+    .contact .mail a { border-bottom: 1px solid var(--line-strong); transition: color .2s, border-color .2s; }
+    .contact .mail a:hover { color: var(--star); border-color: var(--star); }
+
+    /* ===== 頁尾 ===== */
+    footer { position: relative; z-index: 1; border-top: 1px solid var(--line); }
+    footer .wrap {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      padding-top: 32px; padding-bottom: 36px;
+      font-size: 13px; color: var(--star-faint);
+    }
+    footer .tagline { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--star-dim); }
+    footer ul { display: flex; gap: 24px; list-style: none; }
+    footer ul a:hover { color: var(--star); }
+
+    /* ===== 響應式 ===== */
+    @media (max-width: 960px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid .card:last-child { grid-column: 1 / -1; }
+      .grid .card:last-child .cover { aspect-ratio: 16 / 7; }
+    }
+    /* 手機版 */
+    @media (max-width: 720px) {
+      .wrap { padding: 0 16px; }
+      .nav-links li.hide-sm { display: none; }
+      .nav-links { gap: 20px; }
+      .hero { padding: 96px 0 100px; }
+
+      /* 大標題：桌面版 clamp(40px, 6.6vw, 84px) 的 75% */
+      .hero h1 { font-size: clamp(30px, 4.95vw, 63px); }
+
+      /* 三張作品卡片：單欄垂直排列 */
+      .grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+      .grid .card:last-child { grid-column: auto; }
+      .grid .card:last-child .cover { aspect-ratio: 4 / 3; }
+
+      .section { padding-bottom: 100px; }
+      .contact { padding: 56px 22px; border-radius: 24px; margin-bottom: 80px; }
+      footer .wrap { flex-direction: column; text-align: center; }
+
+      /* 觸控友善：連結點擊區域至少 44px 高 */
+      .brand, .nav-links a, footer ul a { display: inline-flex; align-items: center; min-height: 44px; }
+      footer ul { flex-wrap: wrap; justify-content: center; gap: 4px 24px; }
+    }
+    @media (max-width: 420px) {
+      .btn { width: 100%; min-width: 0; }
+      .status { display: none; }
+      .eyebrow { gap: 10px; letter-spacing: .2em; }
+      .services { gap: 8px 20px; letter-spacing: .1em; }
+      .contact h2 { font-size: 24px; }
+      .body { padding: 24px 22px 26px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation: none !important; }
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .js .reveal { opacity: 1; transform: none; }
     }
   </style>
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
   <div class="sky" aria-hidden="true">
@@ -290,44 +386,211 @@
     <div class="stars s2"></div>
     <div class="stars s3"></div>
     <div class="shooting"></div>
-    <div class="shooting late"></div>
   </div>
 
-  <main class="card">
-    <div class="avatar" aria-hidden="true">
-      <svg viewBox="0 0 120 120">
-        <defs>
-          <mask id="moon-cut">
-            <rect x="0" y="0" width="120" height="120" fill="#fff"/>
-            <circle cx="74" cy="50" r="34" fill="#000"/>
-          </mask>
-          <clipPath id="moon-clip"><circle cx="56" cy="62" r="38"/></clipPath>
-          <linearGradient id="moon-fill" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#fff" stop-opacity=".22"/>
-            <stop offset="1" stop-color="#b9c7ff" stop-opacity=".04"/>
-          </linearGradient>
-        </defs>
-        <!-- 彎月：外圓扣掉內圓 -->
-        <circle cx="56" cy="62" r="38" fill="url(#moon-fill)" mask="url(#moon-cut)"/>
-        <circle cx="56" cy="62" r="38" fill="none" stroke="#eef2ff" stroke-width="1.1" mask="url(#moon-cut)"/>
-        <circle cx="74" cy="50" r="34" fill="none" stroke="#eef2ff" stroke-width="1.1" clip-path="url(#moon-clip)"/>
-        <!-- 星芒與小星 -->
-        <path class="tw" d="M96 22 L97.4 27.6 L103 29 L97.4 30.4 L96 36 L94.6 30.4 L89 29 L94.6 27.6 Z" fill="#fff"/>
-        <path class="tw d1" d="M84 60 L84.8 63.2 L88 64 L84.8 64.8 L84 68 L83.2 64.8 L80 64 L83.2 63.2 Z" fill="#fff"/>
-        <circle class="tw d2" cx="106" cy="50" r="1.2" fill="#fff"/>
-        <circle class="tw d3" cx="78" cy="14" r="1" fill="#fff"/>
-      </svg>
+  <!-- ===== 導覽列 ===== -->
+  <header class="nav">
+    <div class="wrap">
+      <a href="#top" class="brand" aria-label="Irene 首頁">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <defs>
+            <mask id="logo-cut">
+              <rect width="120" height="120" fill="#fff"/>
+              <circle cx="74" cy="50" r="34" fill="#000"/>
+            </mask>
+          </defs>
+          <circle cx="56" cy="62" r="38" fill="none" stroke="#eef2ff" stroke-width="4" mask="url(#logo-cut)"/>
+          <path d="M96 18 L98.5 27.5 L108 30 L98.5 32.5 L96 42 L93.5 32.5 L84 30 L93.5 27.5 Z" fill="#fff"/>
+        </svg>
+        Irene
+      </a>
+      <ul class="nav-links">
+        <li class="hide-sm"><a href="#work">作品</a></li>
+        <li class="hide-sm"><a href="#contact">聯絡</a></li>
+        <li><span class="status">開放 2027 Q1 檔期</span></li>
+      </ul>
     </div>
-    <p class="hello">Hello, I'm</p>
-    <h1>Irene</h1>
+  </header>
 
-    <p class="section-title">我的興趣</p>
-    <div class="interests">
-      <div class="tag"><span>📷</span>攝影</div>
-      <div class="tag"><span>✈️</span>旅行</div>
-    </div>
+  <main id="top">
+    <!-- ===== 英雄區塊 ===== -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow fade d1">Freelance Graphic Designer</p>
+        <h1 class="fade d2">把品牌的故事，<br>設計成看得見的<em>光</em>。</h1>
+        <p class="lead fade d3">
+          我是 Irene，專注於品牌識別、編排與包裝設計的平面設計師。
+          以攝影師的觀察與旅人的好奇，替每個品牌找到只屬於它的視覺語言——安靜、精準，而且耐看。
+        </p>
+        <div class="cta fade d4">
+          <a href="#contact" class="btn btn-primary">
+            與我聯繫
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="#work" class="btn btn-ghost">觀看作品</a>
+        </div>
+        <div class="services fade d5">
+          <span>Brand Identity</span>
+          <span>Editorial</span>
+          <span>Packaging</span>
+          <span>Art Direction</span>
+        </div>
+      </div>
+    </section>
 
-    <blockquote>Curious mind, endless possibilities.</blockquote>
+    <!-- ===== 精選作品 ===== -->
+    <section class="section" id="work">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div>
+            <p class="kicker">Selected Work</p>
+            <h2>精選作品</h2>
+          </div>
+          <p>從一個字體、一張紙的觸感開始，每件作品都是與客戶一起把模糊的想法，慢慢對焦成清晰的樣子。</p>
+        </div>
+
+        <div class="grid">
+          <!-- 作品 01 -->
+          <article class="card reveal" tabindex="0">
+            <div class="cover c1">
+              <span class="num">01</span>
+              <div class="icon">
+                <svg viewBox="0 0 48 48" aria-hidden="true">
+                  <!-- 茶杯與蒸氣：品牌識別 -->
+                  <path d="M10 22h24v6a12 12 0 0 1-24 0z"/>
+                  <path d="M34 24h3a4 4 0 0 1 0 8h-4"/>
+                  <path d="M8 42h28"/>
+                  <path d="M17 8c-2 3 2 5 0 8M24 6c-2 3 2 6 0 10M31 8c-2 3 2 5 0 8"/>
+                </svg>
+              </div>
+            </div>
+            <div class="body">
+              <div class="meta"><span class="pill">品牌識別</span><span class="pill">2026</span></div>
+              <h3>霧島茶室</h3>
+              <p class="en">Kirishima Tea House</p>
+              <p class="concept">
+                以山間晨霧為靈感，將漸層的「留白」轉化為品牌核心。字標刻意拉開字距，像蒸氣緩緩升起；
+                配色取自茶湯由淺至深的變化，讓每一個接觸點都帶著一口熱茶的溫度。
+              </p>
+              <span class="more">查看案例
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </article>
+
+          <!-- 作品 02 -->
+          <article class="card reveal" tabindex="0" data-delay=".12s">
+            <div class="cover c2">
+              <span class="num">02</span>
+              <div class="icon">
+                <svg viewBox="0 0 48 48" aria-hidden="true">
+                  <!-- 翻開的書與星：編排設計 -->
+                  <path d="M24 14c-4-3-10-4-16-3v26c6-1 12 0 16 3"/>
+                  <path d="M24 14c4-3 10-4 16-3v26c-6-1-12 0-16 3"/>
+                  <path d="M24 14v26"/>
+                  <path d="M33 4l1 3 3 1-3 1-1 3-1-3-3-1 3-1z"/>
+                  <path d="M12 19h7M12 24h7M12 29h5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="body">
+              <div class="meta"><span class="pill">編排設計</span><span class="pill">2025</span></div>
+              <h3>夜行書店年度刊物</h3>
+              <p class="en">The Nocturne Annual</p>
+              <p class="concept">
+                一本只在夜裡營業的書店，需要一本適合在檯燈下閱讀的年刊。以深藍紙張搭配銀色特印，
+                網格設計參考星座連線，讓讀者在翻頁之間，像在夜空中尋找下一顆星。
+              </p>
+              <span class="more">查看案例
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </article>
+
+          <!-- 作品 03 -->
+          <article class="card reveal" tabindex="0" data-delay=".24s">
+            <div class="cover c3">
+              <span class="num">03</span>
+              <div class="icon">
+                <svg viewBox="0 0 48 48" aria-hidden="true">
+                  <!-- 瓶身與光線：包裝設計 -->
+                  <path d="M19 6h10v6l4 5v23a2 2 0 0 1-2 2H17a2 2 0 0 1-2-2V17l4-5z"/>
+                  <path d="M15 22h18M15 34h18"/>
+                  <path d="M24 26v4M22 28h4"/>
+                  <path d="M40 10l3-2M41 17h3M6 10L3 8M5 17H2"/>
+                </svg>
+              </div>
+            </div>
+            <div class="body">
+              <div class="meta"><span class="pill">包裝設計</span><span class="pill">2025</span></div>
+              <h3>Lumen 光感保養系列</h3>
+              <p class="en">Lumen Skincare</p>
+              <p class="concept">
+                捨棄繁複裝飾，只用一道光線貫穿整個系列。半透明磨砂瓶身讓內容物若隱若現，
+                標籤以細線框出「光」的形狀；在架上安靜，卻在拿起的那一刻被記住。
+              </p>
+              <span class="more">查看案例
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+              </span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 聯絡 ===== -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact reveal">
+          <p class="kicker">Let's Work Together</p>
+          <h2>有一個想法正在發光嗎？<br>讓我們一起把它<em>點亮</em>。</h2>
+          <p>無論是全新品牌、刊物改版或產品包裝，歡迎來信聊聊你的專案。通常會在兩個工作天內回覆。</p>
+          <a href="mailto:hello@irene.design" class="btn btn-primary">
+            與我聯繫
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <span class="mail">或直接寫信至 <a href="mailto:hello@irene.design">hello@irene.design</a></span>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <!-- ===== 頁尾 ===== -->
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Irene Studio. All rights reserved.</span>
+      <span class="tagline">Curious mind, endless possibilities.</span>
+      <ul>
+        <li><a href="#work">作品</a></li>
+        <li><a href="#contact">聯絡</a></li>
+        <li><a href="#top">回到頂部 ↑</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // 捲動進場淡入
+    (function () {
+      var els = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) {
+        els.forEach(function (el) { el.classList.add("in"); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          var el = e.target, d = el.getAttribute("data-delay");
+          // 錯開進場時間，結束後清除，避免影響 hover 動畫
+          if (d) {
+            el.style.transitionDelay = d;
+            el.addEventListener("transitionend", function () { el.style.transitionDelay = ""; }, { once: true });
+          }
+          el.classList.add("in");
+          io.unobserve(el);
+        });
+      }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
 </body>
 </html>
